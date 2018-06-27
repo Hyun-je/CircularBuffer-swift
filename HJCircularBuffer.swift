@@ -11,9 +11,16 @@ import Foundation
 
 class CircularBuffer<T> {
     
-    var buffer:[T]
-    var initValue:T
-    var indexNow:Int
+    private var buffer:[T]
+    private var initValue:T
+    private var indexNow:Int
+    
+    
+    subscript(index:Int) -> T {
+        get {
+            return buffer[index]
+        }
+    }
     
     
     init(size: Int, initValue: T) {
