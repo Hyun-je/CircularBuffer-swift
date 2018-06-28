@@ -9,7 +9,7 @@ import Foundation
 
 
 
-class CircularBuffer<T> {
+class HJCircularBuffer<T> {
     
     private var buffer:[T]
     private var initValue:T
@@ -53,6 +53,9 @@ class CircularBuffer<T> {
         
     }
     
+    func getBuffer() -> [T] {
+        return buffer
+    }
     
     func align() {
         
