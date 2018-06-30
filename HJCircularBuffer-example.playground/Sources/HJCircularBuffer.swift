@@ -9,7 +9,7 @@ import Foundation
 
 
 
-class HJCircularBuffer<T> {
+public class HJCircularBuffer<T> {
     
     private var buffer:[T]
     private var initValue:T
@@ -22,8 +22,7 @@ class HJCircularBuffer<T> {
         }
     }
     
-    
-    init(size: Int, initValue: T) {
+    public init(size: Int, initValue: T) {
         
         self.initValue = initValue
         self.buffer = Array<T>.init(repeating: initValue, count: size)
@@ -32,7 +31,7 @@ class HJCircularBuffer<T> {
         
     }
     
-    func push(_ element: T) {
+    public func push(_ element: T) {
         
         buffer[indexNow] = element
         
@@ -44,7 +43,7 @@ class HJCircularBuffer<T> {
         
     }
     
-    func reset() {
+    public func reset() {
         
         let size = self.buffer.count
         
@@ -53,11 +52,11 @@ class HJCircularBuffer<T> {
         
     }
     
-    func getBuffer() -> [T] {
+    public func getBuffer() -> [T] {
         return buffer
     }
     
-    func align() {
+    public func align() {
         
         let size = self.buffer.count
         
