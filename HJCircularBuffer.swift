@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-
-public class HJCircularBuffer<T> {
+public class HJCircularBuffer<Element> {
     
     private var buffer: [Element]
     private var initValue: Element
