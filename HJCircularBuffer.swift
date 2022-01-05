@@ -11,74 +11,49 @@ import Foundation
 
 public class HJCircularBuffer<T> {
     
-    private var buffer:[T]
-    private var initValue:T
-    private var indexNow:Int
+    private var buffer: [Element]
+    private var initValue: Element
+    private var indexNow: Int
     
     
-    subscript(index:Int) -> T {
+    subscript(index:Int) -> Element {
         get {
             return buffer[index]
         }
     }
     
-    public init(size: Int, initValue: T) {
+    public init(size: Int, initValue: Element) {
         
         self.initValue = initValue
-        self.buffer = Array<T>.init(repeating: initValue, count: size)
+        self.buffer = .init(repeating: initValue, count: size)
         
         indexNow = 0
         
     }
     
-    public func push(_ element: T) {
+    public func push(_ element: Element) {
         
         buffer[indexNow] = element
         
-        indexNow += 1
-        
-        if indexNow >= buffer.count {
-            indexNow = 0
-        }
+        indexNow = (indexNow + 1) % buffer.count
         
     }
     
     public func reset() {
         
-        let size = self.buffer.count
+        let size = buffer.count
         
-        self.buffer = Array<T>.init(repeating: initValue, count: size)
+        buffer = .init(repeating: initValue, count: size)
         indexNow = 0
         
     }
     
-    public func getBuffer() -> [T] {
+    public func getBuffer() -> [Element] {
         return buffer
     }
     
-    public func align() {
-        
-        let size = self.buffer.count
-        
-        let tempBuffer = self.buffer
-        self.buffer = Array<T>.init(repeating: initValue, count: size)
-        
-        
-        var tempIndex = indexNow
-        for i in 0..<self.buffer.count {
-            
-            self.buffer[i] = tempBuffer[tempIndex]
-            
-            if tempIndex == self.buffer.count-1 {
-                tempIndex = 0
-            }
-            else {
-                tempIndex += 1
-            }
-            
-        }
-        
+    public func getAligned() -> [Element] {
+        return Array(buffer[indexNow...] + buffer[0..<indexNow])
     }
-    
     
 }
