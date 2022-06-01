@@ -1,12 +1,5 @@
-//
-//  HJCircularBuffer-example.playground
-//
-//
-//  Created by Hyun-je on 2018. 6. 30..
-//
 
-
-let circularBuffer = HJCircularBuffer<Int>(size: 5, initValue: 0)
+let circularBuffer = HJCircularBuffer(size: 5, initValue: 0)
 
 circularBuffer.push(1)
 circularBuffer.push(2)

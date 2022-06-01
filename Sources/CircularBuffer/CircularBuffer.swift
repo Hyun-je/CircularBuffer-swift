@@ -1,20 +1,24 @@
-//
-//  HJCircularBuffer.swift
-//  
-//
-//  Created by Hyun-je on 2018. 6. 27..
-//
-
 import Foundation
 
-public class HJCircularBuffer<Element> {
+public class CircularBuffer<Element> {
     
     private var buffer: [Element]
     private var initValue: Element
-    private var indexNow: Int
+    private var pushCount: Int
     
+    public var size: Int {
+        return buffer.count
+    }
     
-    subscript(index:Int) -> Element {
+    public var index: Int {
+        return pushCount % buffer.count
+    }
+    
+    public var isFilled: Bool {
+        return pushCount >= size
+    }
+    
+    subscript(index: Int) -> Element {
         get {
             return buffer[index]
         }
@@ -22,27 +26,26 @@ public class HJCircularBuffer<Element> {
     
     public init(size: Int, initValue: Element) {
         
+        assert(size > 0, "Buffer size should not be zero")
+        
         self.initValue = initValue
         self.buffer = .init(repeating: initValue, count: size)
         
-        indexNow = 0
+        pushCount = 0
         
     }
     
     public func push(_ element: Element) {
         
-        buffer[indexNow] = element
-        
-        indexNow = (indexNow + 1) % buffer.count
+        buffer[index] = element
+        pushCount = pushCount + 1
         
     }
     
     public func reset() {
         
-        let size = buffer.count
-        
         buffer = .init(repeating: initValue, count: size)
-        indexNow = 0
+        pushCount = 0
         
     }
     
@@ -51,7 +54,7 @@ public class HJCircularBuffer<Element> {
     }
     
     public func getAligned() -> [Element] {
-        return Array(buffer[indexNow...] + buffer[0..<indexNow])
+        return Array(buffer[index...] + buffer[0..<index])
     }
     
 }
