@@ -4,23 +4,26 @@ public class CircularBuffer<Element> {
     
     private var buffer: [Element]
     private var initValue: Element
-    private var pushCount: Int
+    private var pushCount: UInt64
     
     public var size: Int {
         return buffer.count
     }
     
     public var index: Int {
-        return pushCount % buffer.count
+        return Int(pushCount % UInt64(buffer.count))
     }
     
     public var isFilled: Bool {
         return pushCount >= size
     }
     
-    subscript(index: Int) -> Element {
+    subscript(offset: Int) -> Element {
         get {
-            return buffer[index]
+            return buffer[((index + offset) % size + size) % size]
+        }
+        set {
+            return buffer[((index + offset) % size + size) % size] = newValue
         }
     }
     

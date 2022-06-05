@@ -23,6 +23,25 @@ final class CircularBufferTests: XCTestCase {
  
     }
     
+    func testSubscription() throws {
+        
+        let size = 10
+        let buffer = CircularBuffer(size: size, initValue: 0.0)
+        
+        (1...25).forEach { buffer.push(Double($0)) }
+        
+        XCTAssertEqual(buffer[-10], 16.0)
+        XCTAssertEqual(buffer[-5],  21.0)
+        XCTAssertEqual(buffer[-2],  24.0)
+        XCTAssertEqual(buffer[-1],  25.0)
+        XCTAssertEqual(buffer[0],   16.0)
+        XCTAssertEqual(buffer[1],   17.0)
+        XCTAssertEqual(buffer[2],   18.0)
+        XCTAssertEqual(buffer[5],   21.0)
+        XCTAssertEqual(buffer[10],  16.0)
+        
+    }
+    
     func testIsFilled() throws {
         
         let size = 10
